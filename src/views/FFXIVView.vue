@@ -8,15 +8,16 @@ const props = defineProps<{
   locale: string;
 }>();
 
+onMounted(() => getTopic());
+watch(() => props.locale, () => getTopic());
+
 let _topics: Ref<Topic[]> = ref<Topic[]>([]);
 
 const getTopic = () =>
-  TopicAPI(props.locale).then(res => { console.debug('t', [...res]); _topics.value = res; });
-
-onMounted(() => getTopic());
-watch(() => props.locale, () => {
-  getTopic();
-});
+  TopicAPI(props.locale).then(res => {
+    // console.debug('t', [...res]);
+    _topics.value = res;
+  });
 
 const topics = computed<Topic[]>(() =>
   _topics.value ? _topics.value

@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
-import FFXIVTopics from '../components/FFXIVTopics.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -13,14 +12,21 @@ const router = createRouter({
     {
       path: '/ffxiv',
       name: 'FFXIV',
-      component: FFXIVTopics
+      component: () => import('../views/FFXIVView.vue')
+    },
+    {
+      path: '/mhr',
+      name: 'Monster hunter Rise',
+      component: () => import('../views/MHRView.vue')
+    },
+    {
+      path: '/splatoon3',
+      name: 'Splatoon 3',
+      component: () => import('../views/SplatoonView.vue')
     },
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue')
     }
   ]

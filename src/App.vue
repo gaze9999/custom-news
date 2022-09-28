@@ -6,7 +6,7 @@ import { RouterLink } from 'vue-router';
 let currentLocale: Ref<string> = ref('jp');
 
 const changeLang = (locale: string) => {
-  console.debug('locale:', locale);
+  // console.debug('locale:', locale);
   currentLocale.value = locale;
 };
 </script>
@@ -15,7 +15,10 @@ const changeLang = (locale: string) => {
   <header class="w-100">
     <nav>
       <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/ffxiv">FFXIV</RouterLink>
+      <RouterLink to="/ffxiv">FF XIV</RouterLink>
+      <RouterLink to="/mhr">Monster Hunter Rise</RouterLink>
+      <RouterLink to="/splatoon3">Splatoon 3</RouterLink>
+      <RouterLink to="/about">About</RouterLink>
     </nav>
     <div class="lang_senection">
       <v-btn flat
@@ -37,7 +40,6 @@ const changeLang = (locale: string) => {
 </template>
 
 <style scoped lang="sass">
-
 header
   height: 4rem
 
