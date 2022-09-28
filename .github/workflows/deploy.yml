@@ -20,7 +20,9 @@ jobs:
           node-version: 16
 
       - name: Install dependencies
-        uses: yarn install
+        uses: bahmutov/npm-install@v1
+        with:
+          install-command: yarn install
 
       - name: Build project
         run: yarn run build
