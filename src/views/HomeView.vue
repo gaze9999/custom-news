@@ -1,16 +1,25 @@
 <script setup lang="ts">
-import type { Topic } from 'env';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { TopicAPI } from '../api/topic';
+import type { Topic } from 'env';
+import type { Ref } from 'vue';
 
-let topics = ref<Topic[]>([]);
+const props = defineProps<{
+  locale: string;
+}>();
 
-onMounted(async () => {
-  TopicAPI().then(res => { console.debug('t', [...res]); topics.value = res; });
+let _topics: Ref<Topic[]> = ref<Topic[]>([]);
+
+const getTopic = () =>
+  TopicAPI(props.locale).then(res => { console.debug('t', [...res]); _topics.value = res; });
+
+onMounted(() => getTopic());
+watch(() => props.locale, () => {
+  getTopic();
 });
 
-const result = computed<Topic[]>(() =>
-  topics.value ? topics.value
+const topics = computed<Topic[]>(() =>
+  _topics.value ? _topics.value
     .map(d => {
       const date = new Date(new Date(d.time).getTime() - 3.6e+6);
       return {
@@ -18,7 +27,8 @@ const result = computed<Topic[]>(() =>
         timeStamp:
           `${date.getFullYear()}-` +
           `${date.getMonth() + 1}-` +
-          `${date.getDate()}`,
+          `${date.getDate().toString().length === 1 ? '0' + date.getDate() : date.getDate()}`,
+        // `${date.getHours().toString().length === 1 ? '0' + date.getHours() : date.getHours()}`,
       };
     })
     .sort((a, b) => {
@@ -32,14 +42,14 @@ const result = computed<Topic[]>(() =>
       time: 'none',
       title: 'none',
       url: 'none',
-    }])
-
+    }]);
 </script>
 
 <template>
+  <!-- <p>{{ locale }}</p> -->
   <div>
     <dl>
-      <template v-for="(item, i) of result"
+      <template v-for="(item, i) of topics"
                 :key="i">
         <div>
           <dt>
@@ -47,7 +57,8 @@ const result = computed<Topic[]>(() =>
             <!-- ({{ item.time }}) -->
           </dt>
           <dd>
-            {{ item.title }}
+            <a :href="item.url"
+               target="_blank">{{ item.title }}</a>
           </dd>
         </div>
       </template>
@@ -56,10 +67,8 @@ const result = computed<Topic[]>(() =>
 </template>
 
 <style scoped lang="sass">
-  dl
-    margin-left: 2rem
   dt
-    width: 7rem
-  dt, dd
-    display: inline-flex
+    margin-inline-end: .5rem
+  dd, dt
+    display: inline
 </style>

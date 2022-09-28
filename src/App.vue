@@ -1,16 +1,33 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router';
+import { ref } from 'vue';
+import type { Ref } from 'vue';
+import { RouterLink } from 'vue-router';
+
+let currentLocale: Ref<string> = ref('jp');
+
+const changeLang = (locale: string) => {
+  console.debug('locale:', locale);
+  currentLocale.value = locale;
+};
 </script>
 
 <template>
-  <header>
+  <header class="w-100">
     <nav>
       <RouterLink to="/">Home</RouterLink>
     </nav>
+    <div class="lang_senection">
+      <v-btn flat
+             color="primary"
+             @click="changeLang('jp')">JP</v-btn>
+      <v-btn flat
+             color="primary"
+             @click="changeLang('na')">NA</v-btn>
+    </div>
   </header>
 
   <main>
-    <RouterView />
+    <RouterView :locale="currentLocale" />
   </main>
 
   <footer>
@@ -21,7 +38,6 @@ import { RouterLink, RouterView } from 'vue-router';
 <style scoped lang="sass">
 
 header
-  width: 100%
   height: 4rem
 
 nav 
@@ -29,6 +45,11 @@ nav
   font-size: 12px
   text-align: center
   margin-top: 2rem
+
+.lang_senection
+  display: flex
+  > button:not(:last-of-type)
+    margin-inline-end: .5rem
 
 nav a.router-link-exact-active 
   color: var(--color-text)

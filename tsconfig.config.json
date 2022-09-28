@@ -2,12 +2,14 @@
   "extends": "@vue/tsconfig/tsconfig.node.json",
   "include": ["vite.config.*", "vitest.config.*", "cypress.config.*"],
   "compilerOptions": {
-    "module": "CommonJS",
+    "target": "ESNext",
+    "module": "ESNext",
     "moduleResolution": "node",
     "sourceMap": true,
-    "target": "ES6",
-    "lib": ["ESNext", "DOM"],
     "composite": true,
-    "types": ["node"]
-  }
+    "experimentalDecorators": true,
+    "lib": ["ESNext", "DOM"],
+    "types": ["vite/client"]
+  },
+  "exclude": ["node_modules", "dist", "public"]
 }
