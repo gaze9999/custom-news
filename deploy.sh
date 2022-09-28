@@ -20,6 +20,6 @@ git checkout -b main
 git add -A
 git commit -m 'deploy'
 
-git push -f git@github.com:gaze0000/ffxiv-custom.git main:gh-pages
+git push -f git@github.com:gaze9999/ffxiv-custom.git main:ffxiv-custom
 
 cd -
