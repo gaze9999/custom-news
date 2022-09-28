@@ -15,6 +15,7 @@ const changeLang = (locale: string) => {
   <header class="w-100">
     <nav>
       <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/ffxiv">FFXIV</RouterLink>
     </nav>
     <div class="lang_senection">
       <v-btn flat
