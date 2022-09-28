@@ -18,8 +18,7 @@ const result = computed<Topic[]>(() =>
         timeStamp:
           `${date.getFullYear()}-` +
           `${date.getMonth() + 1}-` +
-          `${date.getDate()}:` +
-          `${date.getHours() - 1}`,
+          `${date.getDate()}`,
       };
     })
     .sort((a, b) => {
