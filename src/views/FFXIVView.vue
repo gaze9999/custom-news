@@ -12,13 +12,6 @@ onMounted(() => getTopic());
 watch(() => props.locale, () => getTopic());
 
 let _topics: Ref<Topic[]> = ref<Topic[]>([]);
-let showDetail = ref({
-  order: 0,
-  show: false,
-  bottom: true,
-  x: 0,
-  y: 0,
-});
 
 const getTopic = () =>
   FFXIVTopicAPI(props.locale).then(res => {
@@ -51,19 +44,6 @@ const topics = computed<Topic[]>(() =>
       title: 'none',
       url: 'none',
     }]);
-
-const onHover = (event: MouseEvent, order: number) => {
-  showDetail.value = {
-    order: order,
-    show: true,
-    x: event.x,
-    y: event.y,
-    bottom: event.y <= document.body.clientHeight / 2,
-  };
-  // console.debug(`hover(${order}):`, [event, showDetail, document.body, topics.value[order]]);
-};
-
-const onLeave = () => showDetail.value.show = false;
 </script>
 
 <template>
@@ -72,34 +52,28 @@ const onLeave = () => showDetail.value.show = false;
     <v-list-item v-for="(item, i) in topics"
                  :key="i"
                  :value="item"
-                 active-color="primary"
-                 @mouseenter="(e: MouseEvent) => onHover(e, i)"
-                 @mouseleave="onLeave()">
+                 active-color="primary">
       <template v-slot:prepend>
         <p class="mr-3">{{ item.timeStamp }}</p>
       </template>
 
-      <v-list-item-title v-bind="props">
-        <v-hover v-slot="{ isHovering, props }">
+      <v-list-item-title>
+        <v-hover v-slot="{ isHovering }">
           <a :href="item.url"
              target="_blank"
-             v-bind="props"
              class="text-primary">{{ item.title }}</a>
 
-
-          <v-tooltip :model-value="isHovering && showDetail.order === i"
+          <v-tooltip :model-value="isHovering"
                      activator="parent"
                      location-strategy="connected"
-                     location="bottom">
-            <!-- <v-card class="topic_detail"> -->
+                     location="bottom start">
             <div class="topic_detail">
+              <!-- <v-card> -->
               <img :src="topics[i].image"
-                   alt="image">
-              <article>
-                {{ topics[i].description }}
-              </article>
+                   :alt="topics[i].id">
+              {{ topics[i].description }}
+              <!-- </v-card> -->
             </div>
-            <!-- </v-card> -->
           </v-tooltip>
         </v-hover>
       </v-list-item-title>
