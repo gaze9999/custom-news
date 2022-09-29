@@ -16,17 +16,17 @@ const changeLang = (locale: string) => {
     <nav>
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/ffxiv">FF XIV</RouterLink>
-      <RouterLink to="/mhr">Monster Hunter Rise</RouterLink>
-      <RouterLink to="/splatoon3">Splatoon 3</RouterLink>
-      <RouterLink to="/about">About</RouterLink>
+      <!-- <RouterLink to="/mhr">Monster Hunter Rise</RouterLink> -->
+      <!-- <RouterLink to="/splatoon3">Splatoon 3</RouterLink> -->
+      <!-- <RouterLink to="/about">About</RouterLink> -->
     </nav>
     <div class="lang_senection">
       <v-btn flat
-             color="primary"
+             color="secondary"
              @click="changeLang('jp')">JP</v-btn>
       <v-btn flat
-             color="primary"
-             @click="changeLang('na')">NA</v-btn>
+             color="secondary"
+             @click="changeLang('na')">EN</v-btn>
     </div>
   </header>
 

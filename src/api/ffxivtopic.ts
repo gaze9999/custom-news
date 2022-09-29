@@ -1,6 +1,6 @@
 import type { Topic } from 'env';
 
-export const TopicAPI = async (locale: string = 'jp') => {
+export const FFXIVTopicAPI = async (locale: string = 'jp') => {
   const res = await fetch(
     `https://lodestonenews.com/news/topics?locale=${locale}`,
     {
