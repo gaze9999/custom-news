@@ -1,6 +1,29 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 
+const routePages = [
+  {
+      path: '/',
+      name: 'home',
+  },
+  {
+    path: '/ffxiv',
+    name: 'FFXIV',
+  },
+  {
+    path: '/mhr',
+    name: 'Monster hunter Rise',
+  },
+  {
+    path: '/splatoon3',
+    name: 'Splatoon 3',
+  },
+  {
+    path: '/about',
+    name: 'about',
+  }
+]
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -33,3 +56,4 @@ const router = createRouter({
 });
 
 export default router;
+export { routePages }

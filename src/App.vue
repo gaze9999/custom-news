@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { routePages } from './router';
 import type { Ref } from 'vue';
-import { RouterLink } from 'vue-router';
 
 let currentLocale: Ref<string> = ref('jp');
+let showMenu: Ref<boolean> = ref(false);
 
 const changeLang = (locale: string) => {
   // console.debug('locale:', locale);
@@ -12,81 +13,54 @@ const changeLang = (locale: string) => {
 </script>
 
 <template>
-  <header class="w-100">
-    <nav>
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/ffxiv">FF XIV</RouterLink>
-      <!-- <RouterLink to="/mhr">Monster Hunter Rise</RouterLink> -->
-      <!-- <RouterLink to="/splatoon3">Splatoon 3</RouterLink> -->
-      <!-- <RouterLink to="/about">About</RouterLink> -->
-    </nav>
-    <div class="lang_senection">
-      <v-btn flat
-             color="secondary"
-             @click="changeLang('jp')">JP</v-btn>
-      <v-btn flat
-             color="secondary"
-             @click="changeLang('na')">EN</v-btn>
-    </div>
-  </header>
+  <v-app>
+    <v-layout ref="app">
+      <v-app-bar name="app-bar"
+                 color="primary">
+        <template v-slot:prepend>
+          <v-app-bar-nav-icon @click="showMenu = !showMenu"></v-app-bar-nav-icon>
+        </template>
 
-  <main>
-    <RouterView :locale="currentLocale" />
-  </main>
+        <v-app-bar-title>Custom News</v-app-bar-title>
 
-  <footer>
-    <div></div>
-  </footer>
+        <template v-slot:append>
+          <div class="d-flex ">
+            <v-btn flat
+                   rounded
+                   color="secondary"
+                   @click="changeLang('jp')">JP</v-btn>
+            <v-btn flat
+                   rounded
+                   color="secondary"
+                   @click="changeLang('na')">EN</v-btn>
+          </div>
+        </template>
+      </v-app-bar>
+
+      <v-navigation-drawer v-model="showMenu"
+                           name="drawer"
+                           color="grey-darken-2">
+        <v-list density="compact"
+                nav>
+          <v-list-item :title="routePages[0].name"
+                       :to="routePages[0].path"></v-list-item>
+          <v-list-item :title="routePages[1].name"
+                       :to="routePages[1].path"></v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+
+      <!-- <v-navigation-drawer>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/ffxiv">FF XIV</RouterLink>
+      </v-navigation-drawer> -->
+      <v-main>
+        <v-container fluid>
+          <router-view :locale="currentLocale" />
+        </v-container>
+      </v-main>
+    </v-layout>
+  </v-app>
 </template>
 
 <style scoped lang="sass">
-header
-  height: 4rem
-
-nav 
-  width: 100%
-  font-size: 12px
-  text-align: center
-  margin-top: 2rem
-
-.lang_senection
-  display: flex
-  > button:not(:last-of-type)
-    margin-inline-end: .5rem
-
-nav a.router-link-exact-active 
-  color: var(--color-text)
-
-nav a.router-link-exact-active:hover 
-  background-color: transparent
-
-nav a 
-  display: inline-block
-  padding: 0 1rem
-  border-left: 1px solid var(--color-border)
-
-nav a:first-of-type 
-  border: 0
-
-@media (min-width: 1024px) 
-  header 
-    display: flex
-    place-items: center
-    padding-right: calc(var(--section-gap) / 2)
-  
-  .logo 
-    margin: 0 2rem 0 0
-
-  header .wrapper 
-    display: flex
-    place-items: flex-start
-    flex-wrap: wrap
-
-  nav 
-    text-align: left
-    margin-left: -1rem
-    font-size: 1rem
-
-    padding: 1rem 0
-    margin-top: 1rem
 </style>

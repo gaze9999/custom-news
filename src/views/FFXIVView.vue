@@ -68,58 +68,49 @@ const onLeave = () => showDetail.value.show = false;
 
 <template>
   <!-- <p>{{ locale }}</p> -->
-  <div>
-    <dl class="topic_list">
-      <template v-for="(item, i) of topics"
-                :key="i">
-        <div class="topic_item">
-          <dt>
-            {{ item.timeStamp }}
-            <!-- ({{ item.time }}) -->
-          </dt>
-          <dd>
-            <a :href="item.url"
-               target="_blank"
-               @mouseover="(e) => onHover(e, i)"
-               @mouseleave="onLeave()">{{ item.title }}</a>
-
-            <template v-if="showDetail.show && showDetail.order === i">
-              <!-- <template v-if="i === 0"> -->
-              <div class="topic_detail"
-                   :style="{
-                    '--position-x': showDetail.x,
-                    '--position-bottom': !showDetail.bottom ? '1.25rem' : 'unset',
-                    '--position-top': showDetail.bottom ? '1.25rem' : 'unset'
-                   }">
-                <!-- <p>debug: <span>{{ showDetail.x }}</span> x <span>{{ showDetail.y }}</span></p> -->
-                <img :src="topics[i].image"
-                     alt="image">
-                {{ topics[i].description }}
-                <article>
-                </article>
-              </div>
-            </template>
-          </dd>
-        </div>
+  <v-list density="compact">
+    <v-list-item v-for="(item, i) in topics"
+                 :key="i"
+                 :value="item"
+                 active-color="primary"
+                 @mouseenter="(e: MouseEvent) => onHover(e, i)"
+                 @mouseleave="onLeave()">
+      <template v-slot:prepend>
+        <p class="mr-3">{{ item.timeStamp }}</p>
       </template>
-    </dl>
-  </div>
+
+      <v-list-item-title v-bind="props">
+        <v-hover v-slot="{ isHovering, props }">
+          <a :href="item.url"
+             target="_blank"
+             v-bind="props"
+             class="text-primary">{{ item.title }}</a>
+
+
+          <v-tooltip :model-value="isHovering && showDetail.order === i"
+                     activator="parent"
+                     location-strategy="connected"
+                     location="bottom">
+            <!-- <v-card class="topic_detail"> -->
+            <div class="topic_detail">
+              <img :src="topics[i].image"
+                   alt="image">
+              <article>
+                {{ topics[i].description }}
+              </article>
+            </div>
+            <!-- </v-card> -->
+          </v-tooltip>
+        </v-hover>
+      </v-list-item-title>
+    </v-list-item>
+  </v-list>
 </template>
 
 <style scoped lang="sass">
-  dt
-    margin-inline-end: .5rem
-  dd, dt
-    display: inline
-
-  .topic_item
-    position: relative
   .topic_detail
-    position: absolute
-    padding: 1rem
-    background-color: var(--vt-c-black-mute)
-    left: 0
-    top: var(--position-top)
-    bottom: var(--position-bottom)
-    z-index: 1
+    max-width: 762px
+    object-fit: contain
+    img
+      width: 100%
 </style>
