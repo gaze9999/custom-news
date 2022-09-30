@@ -1,13 +1,17 @@
 import type { Main, MainCurrent, Topic } from "@src/types/ffxiv";
 
+const header = new Headers({
+  Accept: "application/json",
+  "Content-Type": "application/json",
+});
+
 export const TopicAPI = async (locale: string = "jp") => {
   const res = await fetch(
     `https://lodestonenews.com/news/topics?locale=${locale}`,
     {
       method: "GET",
-      headers: new Headers({
-        Accept: "application/json",
-      }),
+      mode: "cors",
+      headers: header,
     }
   );
   if (!res.ok) throw new Error(res.statusText);
@@ -19,9 +23,8 @@ export const MaintenanceAPI = async (locale: string = "jp") => {
     `https://lodestonenews.com/news/maintenance?locale=${locale}`,
     {
       method: "GET",
-      headers: new Headers({
-        Accept: "application/json",
-      }),
+      mode: "cors",
+      headers: header,
     }
   );
   if (!res.ok) throw new Error(res.statusText);
@@ -29,12 +32,11 @@ export const MaintenanceAPI = async (locale: string = "jp") => {
 };
 export const MaintenanceCurrentAPI = async (locale: string = "jp") => {
   const res = await fetch(
-    `https://na.lodestonenews.com/news/maintenance/current?locale=${locale}`,
+    `https://lodestonenews.com/news/maintenance/current?locale=${locale}`,
     {
       method: "GET",
-      headers: new Headers({
-        Accept: "application/json",
-      }),
+      mode: "cors",
+      headers: header,
     }
   );
   if (!res.ok) throw new Error(res.statusText);
