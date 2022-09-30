@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { routePages } from './router';
-import type { Ref } from 'vue';
+import { ref } from "vue";
+import { routePages } from "./router";
+import type { Ref } from "vue";
 
-let currentLocale: Ref<string> = ref('jp');
-let showMenu: Ref<boolean> = ref(false);
+let currentLocale: Ref<string> = ref("jp");
+let showMenu: Ref<boolean> = ref(true);
 
 const changeLang = (locale: string) => {
   // console.debug('locale:', locale);
-  currentLocale.value = locale;
+  return (currentLocale.value = locale);
 };
 </script>
 
@@ -24,7 +24,7 @@ const changeLang = (locale: string) => {
         <v-app-bar-title>Custom News</v-app-bar-title>
 
         <template v-slot:append>
-          <div class="d-flex ">
+          <div class="d-flex">
             <v-btn flat
                    rounded
                    color="secondary"
@@ -62,5 +62,4 @@ const changeLang = (locale: string) => {
   </v-app>
 </template>
 
-<style scoped lang="sass">
-</style>
+<style scoped lang="sass"></style>

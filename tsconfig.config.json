@@ -9,7 +9,7 @@
     "composite": true,
     "experimentalDecorators": true,
     "lib": ["ESNext", "DOM"],
-    "types": ["vite/client"]
+    "types": ["vite/client", "./src/types/ffxiv.d.ts"]
   },
   "exclude": ["node_modules", "dist", "public"]
 }

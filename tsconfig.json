@@ -4,7 +4,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@api": ["./src/api/index"],
+      "@src/*": ["./src/*"]
     }
   },
 
